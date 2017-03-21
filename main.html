@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width">
+    <title>Firebase App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body ng-app="app">
+    <div class="container">
+       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="jumbotron text-center">
+               <h1>Please Enter Your Account Information</h1>
+           </div>
+       </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <h2>Add an Account</h2>
+            <section class="new-account-form" ng-controller="AccountCtrl as ctrl">
+                <form ng-submit="ctrl.addAccount(ctrl.newAccount)">
+                    <div class="form-group">
+                        <label for="first-name">First name</label>
+                        <input type="text" class="form-control" id="first-name" required
+                    ng-model="ctrl.newAccount.firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="first-name">Last name</label>
+                        <input type="text" class="form-control" id="last-name" required
+                    ng-model="ctrl.newAccount.lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="email" class="form-control" id="email" required
+                    ng-model="ctrl.newAccount.email">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Phone</label>
+                        <input type="number" class="form-control" id="phone" required
+                    ng-model="ctrl.newAccount.phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthday">Birthday</label>
+                        <input type="date" class="form-control" id="birthday"
+                    ng-model="ctrl.newAccount.birthDate">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                    Create account
+                    </button>
+                </form>
+            </section>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <h2>Existing Accounts</h2>
+            <section class="account-list" ng-controller="AccountCtrl as ctrl">
+                <strong>Number of existing accounts: {{ctrl.accounts.length}}</strong>
+                <div class="account-list-item" ng-repeat="account in ctrl.accounts | orderBy: ['lastName', 'firstName', 'email', 'phone'] track by account.$id">
+                    <div class="list-item-row">
+                        <input type="text" class="form-control" ng-model="account.firstName">&nbsp;
+                        <input type="text" class="form-control" ng-model="account.lastName">&nbsp;
+                        <input type="text" class="form-control" ng-model="account.email">&nbsp;
+                        <input type="text" class="form-control" ng-model="account.phone">&nbsp;
+                    </div>
+                    <div class="list-item-row">
+                        <input type="date" class="form-control col-6" ng-model="account.birthDate"><br>
+                        <button class="btn btn-primary btn-sm" ng-click="ctrl.save(account)">
+                            Save
+                        </button>
+                        &nbsp;
+                        <button class="btn btn-danger btn-sm" ng-click="ctrl.remove(account)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                        &nbsp;
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script>
+    <!-- my JS -->
+    <script src="app.js"></script>
+</body>
+</html>
